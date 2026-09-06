@@ -140,6 +140,7 @@ public class MiListaCircular implements ListInterface {
 
     // 12
     public boolean insertTail(Object object) {
+        Node nuevaCabeza = new Node(object);
         if (this.cabeza != null) {
             nuevaCabeza.siguiente = cabeza;
             nuevaCabeza.anterior = cabeza.anterior;
@@ -284,7 +285,7 @@ public class MiListaCircular implements ListInterface {
         boolean finAlcanzado = false;
 
         do {
-            newList.insert(actual.dato);
+            newList.add(actual.dato);
             if (actual == to) {
                 finAlcanzado = true;
                 break;
@@ -300,7 +301,7 @@ public class MiListaCircular implements ListInterface {
 
     // 19
     public MiListaCircular sortList() {
-        if (this.cabeza == null || this.cabeza.siguiente == este.cabeza) {
+        if (this.cabeza == null || this.cabeza.siguiente == this.cabeza) {
             return this;
         }
         Object[] arreglo = this.toArray();
