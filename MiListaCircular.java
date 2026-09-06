@@ -119,23 +119,127 @@ public class MiListaCircular implements ListInterface {
         return false;
     }
 
-    public boolean insertHead(Object object) {return null;}
+    // 11
+    public boolean insertHead(Object object) {
+        Node nuevaCabeza = new Node(object);
 
-    public boolean insertTail(Object object) {return null;}
+        if (this.cabeza != null) {
+            nuevaCabeza.siguiente = cabeza;
+            nuevaCabeza.anterior = cabeza.anterior;
+            cabeza.anterior.siguiente = nuevaCabeza;
+            cabeza.anterior = nuevaCabeza;
+            this.cabeza = nuevaCabeza;
+            return true;
+        }
+        nuevaCabeza.siguiente = nuevaCabeza;
+        nuevaCabeza.anterior = nuevaCabeza;
+        this.cabeza = nuevaCabeza;
+        return true;
+    }
 
-    public boolean set(Node node, Object object) {return null;}
 
-    public boolean remove(Node node) {return null;}
+    // 12
+    public boolean insertTail(Object object) {
+        if (this.cabeza != null) {
+            nuevaCabeza.siguiente = cabeza;
+            nuevaCabeza.anterior = cabeza.anterior;
+            cabeza.anterior.siguiente = nuevaCabeza;
+            cabeza.anterior = nuevaCabeza;
+            return true;
+        }
+        nuevaCabeza.siguiente = nuevaCabeza;
+        nuevaCabeza.anterior = nuevaCabeza;
+        this.cabeza = nuevaCabeza;
+        return true;
+    }
 
-    public boolean contains(Object object) {return null;}
+    // 13
+    public boolean set(Node node, Object object) {
+        if (this.cabeza == null || node == null) {
+            return false;
+        }
+        Node actual = this.cabeza;
+        do {
+            if (actual == node) {
+                actual.dato = object;
+                return true;
+            }
+            actual = actual.siguiente;
+        } while (actual != cabeza);
+        return false;
+    }
 
-    public Object[] toArray() {return null;}
+    // 14
+    public boolean remove(Node node) {
+        if (this.cabeza == null || node == null) {
+            return false;
+        }
+        Node actual = this.cabeza;
+        do {
+            if (actual == node) {
+                if (this.cabeza.siguiente == this.cabeza) {
+                    this.cabeza = null;
+                    return true;
+                }
+                actual.anterior.siguiente = actual.siguiente;
+                actual.siguiente.anterior = actual.anterior;
 
-    public Object[] toArray(Object[] object) {return null;}
+                if (actual == this.cabeza) {
+                    this.cabeza = actual.siguiente;
+                }
+                return true;
+            }
+            actual = actual.siguiente;
+        } while (actual != cabeza);
+        return false;
+    }
 
+    // 15
+    public boolean contains(Object object) {
+        if (this.cabeza == null) {
+            return false;
+        }
+        Node actual = this.cabeza;
+        do {
+            if (actual.dato == object || (actual.dato != null && actual.dato.equals(object))) {
+                return true;
+            }
+            actual = actual.siguiente;
+        } while (actual != cabeza);
+        return false;
+    }
+
+    // 16
+    public Object[] toArray() {
+        if (this.cabeza == null) return new Object[0];
+
+        Node iterador = this.cabeza;
+        int contador = 0;
+        do {
+            iterador = iterador.siguiente;
+            contador++;
+        } while (iterador != cabeza);
+
+        Object[] arreglo = new Object[contador];
+        int i = 0;
+        iterador = this.cabeza;
+        do {
+            arreglo[i] = iterador.dato;
+            iterador = iterador.siguiente;
+            i++;
+        } while (iterador != cabeza);
+        return arreglo;
+    }
+
+    // 17
+    public Object[] toArray(Object[] object) {
+        return null;
+    }
+
+    // 18
     public MiListaCircular subList(Node from, Node to) {return null;}
 
+    // 19
     public MiListaCircular sortList() {return null;}
-
 
 }
