@@ -233,13 +233,87 @@ public class MiListaCircular implements ListInterface {
 
     // 17
     public Object[] toArray(Object[] object) {
-        return null;
+        if (this.cabeza == null) {
+            return object;
+        }
+
+        int tamaño = 0;
+        Node iterador = this.cabeza;
+        do {
+            tamaño++;
+            iterador = iterador.siguiente;
+        } while (iterador != this.cabeza);
+
+        Object[] resultado = object;
+        if (object == null || object.length < tamaño) {
+            resultado = new Object[tamaño];
+        }
+
+        iterador = this.cabeza;
+        int i = 0;
+        do {
+            resultado[i] = iterador.dato;
+            iterador = iterador.siguiente;
+            i++;
+        } while (iterador != this.cabeza);
+
+        // 4. Marca opcional de finalización si el arreglo era más grande que la lista
+        if (resultado.length > tamaño) {
+            resultado[tamaño] = null;
+        }
+        return resultado;
     }
 
     // 18
-    public MiListaCircular subList(Node from, Node to) {return null;}
+    public MiListaCircular subList(Node from, Node to) {
+        MiListaCircular newList = new MiListaCircular();
+        if (this.cabeza == null || from == null || to == null) {
+            return newList;
+        }
+
+        Node actual = this.cabeza;
+        do {
+            if (actual == from) break;
+            actual = actual.siguiente;
+        } while (actual != cabeza);
+
+        if (actual != from) {
+            return newList;
+        }
+
+        boolean finAlcanzado = false;
+
+        do {
+            newList.insert(actual.dato);
+            if (actual == to) {
+                finAlcanzado = true;
+                break;
+            }
+            actual = actual.siguiente;
+        } while (actual != from);
+
+        if (!finAlcanzado) {
+            return new MiListaCircular();
+        }
+        return newList;
+    }
 
     // 19
-    public MiListaCircular sortList() {return null;}
+    public MiListaCircular sortList() {
+        if (this.cabeza == null || this.cabeza.siguiente == este.cabeza) {
+            return this;
+        }
+        Object[] arreglo = this.toArray();
+
+        Arrays.sort(arreglo);
+        Node actual = this.cabeza;
+        int i = 0;
+        do {
+            actual.dato = arreglo[i];
+            i++;
+            actual = actual.siguiente;
+        } while (actual != cabeza);
+        return this;
+    }
 
 }
