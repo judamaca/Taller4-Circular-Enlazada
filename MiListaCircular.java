@@ -4,11 +4,13 @@ public class MiListaCircular implements ListInterface {
     Node cabeza;
 
     // 1
+    @Override
     public boolean isEmpty() {
         return this.cabeza == null;
     }
 
     // 2
+    @Override
     public int getSize() {
         int contador = 0;
         if (this.cabeza == null) {
@@ -26,12 +28,14 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 3
+    @Override
     public void clear() {
         this.cabeza = null;
         return;
     }
 
     // 4
+    @Override
     public Object getHead() {
         if (this.cabeza == null) {
             return null;
@@ -40,6 +44,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 5
+    @Override
     public Object getTail() {
         if (this.cabeza == null) {
             return null;
@@ -48,6 +53,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 6
+    @Override
     public Object get(Node node) {
         if (this.cabeza == null || node == null) {
             return null;
@@ -56,6 +62,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 7
+    @Override
     public Node search(Object object) {
         Node actual = this.cabeza;
         do {
@@ -68,6 +75,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 8
+    @Override
     public boolean add(Object object) {
         Node newNode = new Node(object);
         if (this.cabeza == null) {
@@ -84,6 +92,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 9
+    @Override
     public boolean insert(Node node, Object object) {
         if (this.cabeza == null || node == null) {
             return false;
@@ -100,6 +109,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 10
+    @Override
     public boolean insert(Object objectRef, Object object) {
         if (this.cabeza == null) {
             return false;
@@ -120,6 +130,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 11
+    @Override
     public boolean insertHead(Object object) {
         Node nuevaCabeza = new Node(object);
 
@@ -139,6 +150,7 @@ public class MiListaCircular implements ListInterface {
 
 
     // 12
+    @Override
     public boolean insertTail(Object object) {
         Node nuevaCabeza = new Node(object);
         if (this.cabeza != null) {
@@ -155,6 +167,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 13
+    @Override
     public boolean set(Node node, Object object) {
         if (this.cabeza == null || node == null) {
             return false;
@@ -171,6 +184,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 14
+    @Override
     public boolean remove(Node node) {
         if (this.cabeza == null || node == null) {
             return false;
@@ -196,6 +210,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 15
+    @Override
     public boolean contains(Object object) {
         if (this.cabeza == null) {
             return false;
@@ -211,6 +226,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 16
+    @Override
     public Object[] toArray() {
         if (this.cabeza == null) return new Object[0];
 
@@ -233,6 +249,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 17
+    @Override
     public Object[] toArray(Object[] object) {
         if (this.cabeza == null) {
             return object;
@@ -266,6 +283,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 18
+    @Override
     public MiListaCircular subList(Node from, Node to) {
         MiListaCircular newList = new MiListaCircular();
         if (this.cabeza == null || from == null || to == null) {
@@ -300,6 +318,7 @@ public class MiListaCircular implements ListInterface {
     }
 
     // 19
+    @Override
     public MiListaCircular sortList() {
         if (this.cabeza == null || this.cabeza.siguiente == this.cabeza) {
             return this;
