@@ -46,10 +46,12 @@ public class MiListaCircular implements ListInterface {
     // 5
     @Override
     public Object getTail() {
-        if (this.cabeza == null) {
-            return null;
+        if (this.cabeza == null) return null;
+        Node iterador = this.cabeza;
+        while (iterador.siguiente != cabeza) {
+            iterador = iterador.siguiente;
         }
-        return cabeza.anterior.dato;
+        return iterador.dato;
     }
 
     // 6
@@ -80,14 +82,15 @@ public class MiListaCircular implements ListInterface {
         Node newNode = new Node(object);
         if (this.cabeza == null) {
             newNode.siguiente = newNode;
-            newNode.anterior = newNode;
             this.cabeza = newNode;
             return true;
         }
+        Node iterador = this.cabeza;
+        while (iterador.siguiente != cabeza) {
+            iterador = iterador.siguiente;
+        }
+        iterador.siguiente = newNode;
         newNode.siguiente = cabeza;
-        newNode.anterior = cabeza.anterior;
-        this.cabeza.anterior.siguiente = newNode;
-        this.cabeza.anterior = newNode;
         return true;
     }
 
@@ -98,13 +101,8 @@ public class MiListaCircular implements ListInterface {
             return false;
         }
         Node newNode = new Node(object);
-
-        newNode.anterior = node;
         newNode.siguiente = node.siguiente;
-
-        node.siguiente.anterior = newNode;
         node.siguiente = newNode;
-
         return true;
     }
 
@@ -118,9 +116,7 @@ public class MiListaCircular implements ListInterface {
         do {
             if (actual.dato != null && actual.dato.equals(objectRef)) {
                 Node newNode = new Node(object);
-                newNode.anterior = actual;
                 newNode.siguiente = actual.siguiente;
-                actual.siguiente.anterior = newNode;
                 actual.siguiente = newNode;
                 return true;
             }
@@ -135,15 +131,16 @@ public class MiListaCircular implements ListInterface {
         Node nuevaCabeza = new Node(object);
 
         if (this.cabeza != null) {
+            Node iterador = this.cabeza;
+            while (iterador.siguiente != cabeza) {
+                iterador = iterador.siguiente;
+            }
             nuevaCabeza.siguiente = cabeza;
-            nuevaCabeza.anterior = cabeza.anterior;
-            cabeza.anterior.siguiente = nuevaCabeza;
-            cabeza.anterior = nuevaCabeza;
+            iterador.siguiente = nuevaCabeza;
             this.cabeza = nuevaCabeza;
             return true;
         }
         nuevaCabeza.siguiente = nuevaCabeza;
-        nuevaCabeza.anterior = nuevaCabeza;
         this.cabeza = nuevaCabeza;
         return true;
     }
@@ -154,14 +151,15 @@ public class MiListaCircular implements ListInterface {
     public boolean insertTail(Object object) {
         Node nuevaCabeza = new Node(object);
         if (this.cabeza != null) {
+            Node iterador = this.cabeza;
+            while (iterador.siguiente != cabeza) {
+                iterador = iterador.siguiente;
+            }
             nuevaCabeza.siguiente = cabeza;
-            nuevaCabeza.anterior = cabeza.anterior;
-            cabeza.anterior.siguiente = nuevaCabeza;
-            cabeza.anterior = nuevaCabeza;
+            iterador.siguiente = nuevaCabeza;
             return true;
         }
         nuevaCabeza.siguiente = nuevaCabeza;
-        nuevaCabeza.anterior = nuevaCabeza;
         this.cabeza = nuevaCabeza;
         return true;
     }
@@ -189,24 +187,34 @@ public class MiListaCircular implements ListInterface {
         if (this.cabeza == null || node == null) {
             return false;
         }
+
+        if (this.cabeza.siguiente == this.cabeza) {
+            this.cabeza = null;
+            return true;
+        }
+
         Node actual = this.cabeza;
+        Node anterior = null;
+
         do {
             if (actual == node) {
-                if (this.cabeza.siguiente == this.cabeza) {
-                    this.cabeza = null;
-                    return true;
-                }
-                actual.anterior.siguiente = actual.siguiente;
-                actual.siguiente.anterior = actual.anterior;
-
                 if (actual == this.cabeza) {
+                    Node iterador = this.cabeza;
+                    while (iterador.siguiente != cabeza) {
+                        iterador = iterador.siguiente;
+                    }
                     this.cabeza = actual.siguiente;
+                    iterador.siguiente = this.cabeza;
+                } else {
+                    anterior.siguiente = actual.siguiente;
                 }
                 return true;
             }
+            anterior = actual;
             actual = actual.siguiente;
         } while (actual != cabeza);
         return false;
+
     }
 
     // 15
