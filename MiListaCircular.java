@@ -48,9 +48,10 @@ public class MiListaCircular implements ListInterface {
     public Object getTail() {
         if (this.cabeza == null) return null;
         Node iterador = this.cabeza;
-        while (iterador.siguiente != cabeza) {
+        while (iterador.siguiente != null && iterador.siguiente != cabeza) {
             iterador = iterador.siguiente;
         }
+        if (iterador == null) return null;
         return iterador.dato;
     }
 
@@ -69,11 +70,12 @@ public class MiListaCircular implements ListInterface {
         if (cabeza == null) return null;
         Node actual = this.cabeza;
         do {
+            if (actual == null) return null;
             if (actual.dato == null ? object == null : actual.dato.equals(object)) {
                 return actual;
             }
             actual = actual.siguiente;
-        } while (actual != cabeza);
+        } while (actual != cabeza && actual != null);
         return null;
     }
 
@@ -87,8 +89,11 @@ public class MiListaCircular implements ListInterface {
             return true;
         }
         Node iterador = this.cabeza;
-        while (iterador.siguiente != cabeza) {
+        while (iterador.siguiente != null && iterador.siguiente != cabeza) {
             iterador = iterador.siguiente;
+        }
+        if (iterador == null) {
+            return false;
         }
         iterador.siguiente = newNode;
         newNode.siguiente = cabeza;
@@ -115,6 +120,7 @@ public class MiListaCircular implements ListInterface {
         }
         Node actual = this.cabeza;
         do {
+            if (actual == null) return false;
             if (actual.dato != null && actual.dato.equals(objectRef)) {
                 Node newNode = new Node(object);
                 newNode.siguiente = actual.siguiente;
@@ -122,7 +128,7 @@ public class MiListaCircular implements ListInterface {
                 return true;
             }
             actual = actual.siguiente;
-        } while (actual != cabeza);
+        } while (actual != cabeza && actual != null);
         return false;
     }
 
@@ -133,8 +139,11 @@ public class MiListaCircular implements ListInterface {
 
         if (this.cabeza != null) {
             Node iterador = this.cabeza;
-            while (iterador.siguiente != cabeza) {
+            while (iterador != null && iterador.siguiente != null && iterador.siguiente != cabeza) {
                 iterador = iterador.siguiente;
+            }
+            if (iterador == null) {
+                return false;
             }
             nuevaCabeza.siguiente = cabeza;
             iterador.siguiente = nuevaCabeza;
@@ -153,8 +162,11 @@ public class MiListaCircular implements ListInterface {
         Node nuevaCabeza = new Node(object);
         if (this.cabeza != null) {
             Node iterador = this.cabeza;
-            while (iterador.siguiente != cabeza) {
+            while (iterador != null && iterador.siguiente != null && iterador.siguiente != cabeza) {
                 iterador = iterador.siguiente;
+            }
+            if (iterador == null) {
+                return false;
             }
             nuevaCabeza.siguiente = cabeza;
             iterador.siguiente = nuevaCabeza;
@@ -173,12 +185,13 @@ public class MiListaCircular implements ListInterface {
         }
         Node actual = this.cabeza;
         do {
+            if (actual == null) return false;
             if (actual == node) {
                 actual.dato = object;
                 return true;
             }
             actual = actual.siguiente;
-        } while (actual != cabeza);
+        } while (actual != cabeza && actual != null);
         return false;
     }
 
@@ -198,11 +211,15 @@ public class MiListaCircular implements ListInterface {
         Node anterior = null;
 
         do {
+            if (actual == null) return false;
             if (actual == node) {
                 if (actual == this.cabeza) {
                     Node iterador = this.cabeza;
-                    while (iterador.siguiente != cabeza) {
+                    while (iterador != null && iterador.siguiente != null && iterador.siguiente != cabeza) {
                         iterador = iterador.siguiente;
+                    }
+                    if (iterador == null) {
+                        return false;
                     }
                     this.cabeza = actual.siguiente;
                     iterador.siguiente = this.cabeza;
@@ -213,7 +230,7 @@ public class MiListaCircular implements ListInterface {
             }
             anterior = actual;
             actual = actual.siguiente;
-        } while (actual != cabeza);
+        } while (actual != cabeza && actual != null);
         return false;
 
     }
@@ -226,11 +243,12 @@ public class MiListaCircular implements ListInterface {
         }
         Node actual = this.cabeza;
         do {
+            if (actual == null) return false;
             if (actual.dato == object || (actual.dato != null && actual.dato.equals(object))) {
                 return true;
             }
             actual = actual.siguiente;
-        } while (actual != cabeza);
+        } while (actual != cabeza && actual != null);
         return false;
     }
 
@@ -242,18 +260,20 @@ public class MiListaCircular implements ListInterface {
         Node iterador = this.cabeza;
         int contador = 0;
         do {
+            if (iterador == null) return new Object[0];
             iterador = iterador.siguiente;
             contador++;
-        } while (iterador != cabeza);
+        } while (iterador != cabeza && iterador != null);
 
         Object[] arreglo = new Object[contador];
         int i = 0;
         iterador = this.cabeza;
         do {
+            if (iterador == null) break;
             arreglo[i] = iterador.dato;
             iterador = iterador.siguiente;
             i++;
-        } while (iterador != cabeza);
+        } while (iterador != cabeza && iterador != null);
         return arreglo;
     }
 
@@ -267,9 +287,10 @@ public class MiListaCircular implements ListInterface {
         int tamaño = 0;
         Node iterador = this.cabeza;
         do {
+            if (iterador == null) return object;
             tamaño++;
             iterador = iterador.siguiente;
-        } while (iterador != this.cabeza);
+        } while (iterador != this.cabeza && iterador != null);
 
         Object[] resultado = object;
         if (object == null || object.length < tamaño) {
@@ -279,10 +300,11 @@ public class MiListaCircular implements ListInterface {
         iterador = this.cabeza;
         int i = 0;
         do {
+            if (iterador == null) break;
             resultado[i] = iterador.dato;
             iterador = iterador.siguiente;
             i++;
-        } while (iterador != this.cabeza);
+        } while (iterador != this.cabeza && iterador != null);
 
         // 4. Marca opcional de finalización si el arreglo era más grande que la lista
         if (resultado.length > tamaño) {
@@ -301,6 +323,7 @@ public class MiListaCircular implements ListInterface {
 
         Node actual = this.cabeza;
         do {
+            if (actual == null) return newList;
             if (actual == from) break;
             actual = actual.siguiente;
         } while (actual != cabeza);
@@ -312,13 +335,14 @@ public class MiListaCircular implements ListInterface {
         boolean finAlcanzado = false;
 
         do {
+            if (actual == null) return newList;
             newList.add(actual.dato);
             if (actual == to) {
                 finAlcanzado = true;
                 break;
             }
             actual = actual.siguiente;
-        } while (actual != from);
+        } while (actual != from && actual != null);
 
         if (!finAlcanzado) {
             return new MiListaCircular();
@@ -338,10 +362,11 @@ public class MiListaCircular implements ListInterface {
         Node actual = this.cabeza;
         int i = 0;
         do {
+            if (actual == null) return this;
             actual.dato = arreglo[i];
             i++;
             actual = actual.siguiente;
-        } while (actual != cabeza);
+        } while (actual != cabeza && actual != null);
         return this;
     }
 
