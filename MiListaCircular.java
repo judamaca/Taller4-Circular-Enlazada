@@ -66,9 +66,10 @@ public class MiListaCircular implements ListInterface {
     // 7
     @Override
     public Node search(Object object) {
+        if (cabeza == null) return null;
         Node actual = this.cabeza;
         do {
-            if (actual.dato != null && actual.dato.equals(object)) {
+            if (actual.dato == null ? object == null : actual.dato.equals(object)) {
                 return actual;
             }
             actual = actual.siguiente;
